@@ -12,37 +12,45 @@ xmlport 50100 "Import Items XMLport"
     {
         textelement(Root)
         {
-            tableelement(Item; Item)
+             tableelement(Domain; Domain)
             {
-                XmlName = 'Domains';
-                RequestFilterFields = "No.";
-                fieldelement(No; Item."No.")
-                {
-                }
-                fieldelement(Description; Item.Description)
-                {
-                }
-                fieldelement(Type; Item.Type)
-                {
-                }
-                fieldelement(Inventory; Item.Inventory)
-                {
-                }
-                fieldelement(BaseUnitofMeasure; Item."Base Unit of Measure")
-                {
-                }
-                fieldelement(CostisAdjusted; Item."Cost is Adjusted")
-                {
-                }
-                fieldelement(UnitCost; Item."Unit Cost")
-                {
-                }
-                fieldelement(UnitPrice; Item."Unit Price")
-                {
-                }
-                fieldelement(VendorNo; Item."Vendor No.")
-                {
-                }
+                RequestFilterFields = "Domain /Subscription";
+                fieldelement(Domains; Domain."Domain /Subscription")
+                { }
+                fieldelement(NichtInAutoDNS; Domain."Not in AutoDNS")
+                { }
+                fieldelement(Debitorennr; Domain."Debtor no.")
+                { }
+                fieldelement(Debitorenname; Domain."Debitor name")
+                { }
+                fieldelement(NächstAbrechungsZeitraum; Domain."Next billing date")
+                { }
+                fieldelement(Monatspreis; Domain."Monthly price")
+                { }
+                fieldelement(Abrechnungszeitraum; Domain."Billing period")
+                { }
+                fieldelement(Registrierungsdatum; Domain."Registration date")
+                { }
+                fieldelement(Vertragsende; Domain."End of contract")
+                { }
+                fieldelement(AliasDomain; Domain."Alias-domain")
+                { }
+                fieldelement(Status; Domain.Status)
+                { }
+                fieldelement(Kündigungsdatum; Domain."Termination date")
+                { }
+                fieldelement(AngelegtVon; Domain."Created By")
+                { }
+                fieldelement(AbgerechnetBisZum; Domain."Settled until")
+                { }
+                fieldelement(Kommentar; Domain.comment)
+                { }
+                fieldelement(Vereinbarung; Domain.Argeement)
+                { }
+                fieldelement(Art; Domain.Type)
+                { }
+                fieldelement(VonPZerstellt; Domain."Created by PZ")
+                { }
 
                 trigger OnAfterInitRecord()
                 begin
@@ -50,6 +58,16 @@ xmlport 50100 "Import Items XMLport"
                         IsFirstline := false;
                         currXMLport.Skip();
                     end;
+                end;
+
+                trigger OnAfterGetRecord()
+                var
+                    domain: Record Domain;
+
+                begin
+                    domain.Reset();
+                    domain.SetRange("Domain /Subscription", Domain."Domain /Subscription");
+                    if domain.FindFirst() then domain.Delete(true);
                 end;
             }
         }
@@ -64,7 +82,7 @@ xmlport 50100 "Import Items XMLport"
         IsFirstline: Boolean;
 }
 
-pageextension 50100 ItemExt extends "Item List"
+pageextension 50100 DomainExt extends "Domain List"
 {
     actions
     {
