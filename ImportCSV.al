@@ -1,6 +1,6 @@
 xmlport 50100 "Import Items XMLport"
 {
-    Caption = 'Import Items';
+    Caption = 'Import Domains';
     Format = VariableText;
     Direction = Import;
     TextEncoding = UTF8;
@@ -14,7 +14,7 @@ xmlport 50100 "Import Items XMLport"
         {
             tableelement(Item; Item)
             {
-                XmlName = 'Item';
+                XmlName = 'Domains';
                 RequestFilterFields = "No.";
                 fieldelement(No; Item."No.")
                 {
@@ -72,7 +72,7 @@ pageextension 50100 ItemExt extends "Item List"
         {
             action(ImportItemsviaXMLport)
             {
-                Caption = 'Import Items via XMLport';
+                Caption = 'Import Domain via XMLport';
                 Promoted = true;
                 PromotedCategory = Process;
                 Image = Import;
